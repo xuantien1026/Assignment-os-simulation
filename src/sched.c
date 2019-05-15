@@ -26,13 +26,13 @@ struct pcb_t * get_proc(void) {
 	 * */
 	pthread_mutex_lock(&queue_lock);
 	if (!queue_empty()){
-		if(empty(ready_queue)){ // Copy run_queue back to ready_queue
-			for (int i = 0; i < run_queue->size; ++i)
-				ready_queue->proc[i] = run_queue->proc[i];
-			ready_queue->size = run_queue->size;
-			run_queue->size = 0;
+		if(empty(&ready_queue)){ // Copy run_queue back to ready_queue
+			for (int i = 0; i < run_queue.size; ++i)
+				ready_queue.proc[i] = run_queue.proc[i];
+			ready_queue.size = run_queue.size;
+			run_queue.size = 0;
 		}
-		proc = dequeue(ready_queue);
+		proc = dequeue(&ready_queue);
 	}
 	pthread_mutex_unlock(&queue_lock);
 	return proc;

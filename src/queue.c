@@ -28,7 +28,7 @@ struct pcb_t * dequeue(struct queue_t * q) {
 			chosen_proc_index = i;
 		}
 	}
-	pcb_t * chosen_pcb = (q->proc[i])
+	struct pcb_t * chosen_pcb = (q->proc[chosen_proc_index]);
 	// Remove chosen process from the array and move others up.
 	for (int i = chosen_proc_index; i < q->size - 1; ++i)
 		q->proc[i] = q->proc[i+1];
