@@ -1,4 +1,3 @@
-
 #include "mem.h"
 #include "stdlib.h"
 #include "string.h"
@@ -53,6 +52,8 @@ static struct page_table_t * get_page_table(
 	int i;
 	for (i = 0; i < seg_table->size; i++) {
 		// Enter your code here
+		if (seg_table->table[i].v_index == index)
+			return seg_table->table[i].pages;
 	}
 	return NULL;
 
@@ -87,6 +88,7 @@ static int translate(
 			 * to [p_index] field of page_table->table[i] to 
 			 * produce the correct physical address and save it to
 			 * [*physical_addr]  */
+			*physical_addr = offset + (page_table->table[i].p_index << OFFSET_LEN);
 			return 1;
 		}
 	}
