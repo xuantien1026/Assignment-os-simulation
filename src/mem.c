@@ -176,6 +176,18 @@ int free_mem(addr_t address, struct pcb_t * proc) {
 	 * 	  the process [proc].
 	 * 	- Remember to use lock to protect the memory from other
 	 * 	  processes.  */
+	pthread_mutex_lock(&mem_lock);
+	// Set flag of physical pages used by the block to zero
+	addr_t physical_address;
+	translate(address, &physical_address, proc);
+	uint32_t index_in_RAM = physical_address / PAGE_SIZE;
+	while(_mem_stat[index_in_RAM].next != -1){
+		_mem_stat[index_in_RAM].proc = 0;
+		index_in_RAM = _mem_stat[index_in_RAM].next;
+	}
+	// Remove unused entries in segment table, page tables of the process
+	
+	pthread_mutex_unlock(&mem_lock);
 	return 0;
 }
 
