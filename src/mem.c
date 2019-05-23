@@ -164,10 +164,8 @@ addr_t alloc_mem(uint32_t size, struct pcb_t * proc) {
 			}
 		} // end for loop
 	} // end mem_avail
-	// if(1){
-	// 	puts("========== Allocate memory=============");
-	// 	dump();
-	// }
+	puts("========== Allocate memory===============");
+	dump();
 	pthread_mutex_unlock(&mem_lock);
 	return ret_mem;
 }
@@ -209,6 +207,8 @@ int free_mem(addr_t address, struct pcb_t * proc) {
 			}
 		}
 	}
+	puts("========== Deallocate memory=============");
+	dump();
 	pthread_mutex_unlock(&mem_lock);
 	return 0;
 }
